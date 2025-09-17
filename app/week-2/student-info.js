@@ -1,0 +1,1 @@
+//Code react component called "Studentinfo" that displays name + GitHub repo 
