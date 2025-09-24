@@ -1,4 +1,7 @@
-const item1 = {
+import Item from './item';
+
+export default function ItemList() {
+  const item1 = {
     name: "milk, 4 L 🥛",
     quantity: 1,
     category: "dairy",
@@ -69,3 +72,22 @@ const item1 = {
     quantity: 4,
     category: "household",
   };
+
+  const items = [
+    item1, item2, item3, item4, item5, item6,
+    item7, item8, item9, item10, item11, item12
+  ];
+
+  return (
+    <ul className="divide-y divide-gray-200">
+      {items.map((item, index) => (
+        <Item
+          key={index}
+          name={item.name}
+          quantity={item.quantity}
+          category={item.category}
+        />
+      ))}
+    </ul>
+  );
+}
