@@ -79,7 +79,7 @@ export default function ItemList() {
   ];
 
   return (
-    <ul className="divide-y divide-gray-200">
+    <ul className="divide-y divide-black-3000">
       {items.map((item, index) => (
         <Item
           key={index}
