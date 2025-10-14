@@ -17,11 +17,11 @@ export default function NewItem() {
         <button
           type="button"
           onClick={decrement}
-          disabled={quantity === 1}
+          disabled={quantity == 1}
           aria-label="Decrease"
           className="h-12 w-12 rounded-full bg-white text-indigo-600 text-2xl font-bold transition hover:bg-indigo-100 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
         >
-          –
+          -
         </button>
 
         <div className="h-16 w-20 rounded-lg bg-white text-indigo-700 flex items-center justify-center shadow-inner">
