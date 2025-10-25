@@ -2,22 +2,24 @@
 
 import { useMemo, useState } from "react";
 import Item from "./item";
-import itemsData from "./items.json";
 
-export default function ItemList() {
+export default function ItemList({ items }) {
   const [sortBy, setSortBy] = useState("name");
 
   const view = useMemo(() => {
-    const sorted = [...itemsData].sort((a, b) => {
+    const copy = Array.isArray(items) ? [...items] : [];
+    copy.sort((a, b) => {
       const primary =
         sortBy === "name"
           ? a.name.localeCompare(b.name, undefined, { sensitivity: "base" })
-          : a.category.localeCompare(b.category, undefined, { sensitivity: "base" });
+          : a.category.localeCompare(b.category, undefined, {
+              sensitivity: "base",
+            });
       if (primary !== 0) return primary;
       return a.name.localeCompare(b.name, undefined, { sensitivity: "base" });
     });
-    return sorted;
-  }, [sortBy]);
+    return copy;
+  }, [items, sortBy]);
 
   const button = "px-3 py-1 rounded border transition";
   const active = "bg-blue-600 text-white border-blue-600";
@@ -29,12 +31,14 @@ export default function ItemList() {
         <button
           className={`${button} ${sortBy === "name" ? active : inactive}`}
           onClick={() => setSortBy("name")}
-        > Sort by Name
+        >
+          Sort by Name
         </button>
         <button
           className={`${button} ${sortBy === "category" ? active : inactive}`}
           onClick={() => setSortBy("category")}
-        > Sort by Category
+        >
+          Sort by Category
         </button>
       </div>
 
