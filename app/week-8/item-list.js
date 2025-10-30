@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Item from "./item";
 
-export default function ItemList({ items }) {
+export default function ItemList({ items, onItemSelect }) {
   const [sortBy, setSortBy] = useState("name");
 
   const view = useMemo(() => {
@@ -49,6 +49,7 @@ export default function ItemList({ items }) {
             name={it.name}
             quantity={it.quantity}
             category={it.category}
+            onSelect={() => onItemSelect?.(it)}
           />
         ))}
       </ul>

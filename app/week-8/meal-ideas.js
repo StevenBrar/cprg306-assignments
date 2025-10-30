@@ -41,7 +41,7 @@ export default function MealIdeas({ ingredient })
       )}
 
       {ingredient && meals.length === 0 && (
-        <p className="text-gray-600">No meals found for that ingredient.</p>
+        <p className="text-gray-600">No meals found.</p>
       )}
 
       {meals.length > 0 && (
