@@ -1,53 +1,37 @@
+// app/week-9/page.js
 "use client";
 
-import { useState } from "react";
-import NewItem from "./new-item";
-import ItemList from "./item-list";
-import MealIdeas from "./meal-ideas";
-import itemsData from "./items.json";
+import Link from "next/link";
+import { useUserAuth } from "../context/AuthContext";
 
-function cleanNameForMealDB(raw) {
-  if (!raw) return "";
-  let base = raw.split(",")[0];
-  base = base.replace(
-    /[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2580-\u27BF]|\uD83E[\uDD10-\uDDFF]/g,
-    "");
-  base = base.replace(/[^\p{L}\s]/gu, "");
-  return base.trim().toLowerCase();
-}
+export default function Week9LandingPage() {
+  const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
 
-
-export default function Page() {
-  const [items, setItems] = useState(itemsData);
-  const [selectedItemName, setSelectedItemName] = useState("");
-
-  const handleAddItem = (item) => {
-    setItems((prev) => [item, ...prev]);
-  };
-
-  const handleItemSelect = (item) => {
-    const cleaned = cleanNameForMealDB(item?.name ?? "");
-    setSelectedItemName(cleaned);
-  };
+  const handleLogin = async () => { try { await gitHubSignIn(); } catch (e) { console.error(e); } };
+  const handleLogout = async () => { try { await firebaseSignOut(); } catch (e) { console.error(e); } };
 
   return (
-    <main className="mx-auto max-w-6xl p-6">
-      <h1 className="text-4xl font-bold text-center text-gray-900 mb-6">
-        Shopping List + Meal Ideas
-      </h1>
-
-      <div className="flex flex-col md:flex-row gap-6">
-
-        <div className="md:w-1/2 space-y-6">
-          <NewItem onAddItem={handleAddItem} />
-          <ItemList items={items} onItemSelect={handleItemSelect} />
-        </div>
-
-
-        <div className="md:w-1/2">
-          <MealIdeas ingredient={selectedItemName} />
-        </div>
-      </div>
+    <main className="mx-auto max-w-3xl p-6">
+      {!user ? (
+        <>
+          <h1 className="text-3xl font-bold mb-4">Welcome to the App</h1>
+          <button className="rounded bg-black px-4 py-2 text-white" onClick={handleLogin}>
+            Sign in with GitHub
+          </button>
+        </>
+      ) : (
+        <>
+          <h1 className="text-2xl font-semibold mb-2">
+            Welcome, {user.displayName} ({user.email})
+          </h1>
+          <div className="flex items-center gap-3">
+            <button className="rounded bg-gray-200 px-3 py-2" onClick={handleLogout}>Logout</button>
+            <Link className="rounded bg-blue-600 px-3 py-2 text-white" href="/week-9/shopping-list">
+              Go to Shopping List
+            </Link>
+          </div>
+        </>
+      )}
     </main>
   );
 }
