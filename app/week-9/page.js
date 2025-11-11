@@ -37,10 +37,13 @@ export default function Page() {
       </h1>
 
       <div className="flex flex-col md:flex-row gap-6">
+
         <div className="md:w-1/2 space-y-6">
           <NewItem onAddItem={handleAddItem} />
           <ItemList items={items} onItemSelect={handleItemSelect} />
         </div>
+
+
         <div className="md:w-1/2">
           <MealIdeas ingredient={selectedItemName} />
         </div>
