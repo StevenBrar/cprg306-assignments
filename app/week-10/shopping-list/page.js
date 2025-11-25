@@ -1,4 +1,3 @@
-// app/week-9/shopping-list/page.js
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -7,7 +6,7 @@ import { useUserAuth } from "../../context/AuthContext";
 import NewItem from "./new-item";
 import ItemList from "./item-list";
 import MealIdeas from "./meal-ideas";
-import itemsData from "./items.json";
+import { getItems, addItem } from "../_services/shopping-list-service";
 
 function cleanNameForMealDB(raw) {
   if (!raw) return "";
@@ -20,20 +19,44 @@ function cleanNameForMealDB(raw) {
   return base.trim().toLowerCase();
 }
 
-export default function Page() {
+export default function Week10ShoppingListPage() {
   const router = useRouter();
   const { user } = useUserAuth();
 
-  const [items, setItems] = useState(itemsData);
+  const [items, setItems] = useState([]);
   const [selectedItemName, setSelectedItemName] = useState("");
 
   useEffect(() => {
-    if (user === null) router.replace("/week-9");
+    if (user === null) {
+      router.replace("/week-10");
+      return;
+    }
+
+    if (!user) return;
+
+    const loadItems = async () => {
+      try {
+        const data = await getItems(user.uid);
+        setItems(data);
+      } catch (err) {
+        console.error("Error loading items:", err);
+      }
+    };
+
+    loadItems();
   }, [user, router]);
 
   if (user === null) return null;
 
-  const handleAddItem = (item) => setItems((prev) => [item, ...prev]);
+  const handleAddItem = async (item) => {
+    try {
+      const newId = await addItem(user.uid, item);
+      const itemWithId = { ...item, id: newId };
+      setItems((prev) => [itemWithId, ...prev]);
+    } catch (err) {
+      console.error("Error adding item:", err);
+    }
+  };
 
   const handleItemSelect = (item) => {
     const cleaned = cleanNameForMealDB(item?.name ?? "");
