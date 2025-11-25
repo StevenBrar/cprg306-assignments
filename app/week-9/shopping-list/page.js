@@ -1,4 +1,3 @@
-// app/week-9/shopping-list/page.js
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -28,7 +27,7 @@ export default function Page() {
   const [selectedItemName, setSelectedItemName] = useState("");
 
   useEffect(() => {
-    if (user === null) router.replace("/week-9");
+    if (user === null) router.replace("/week10");
   }, [user, router]);
 
   if (user === null) return null;

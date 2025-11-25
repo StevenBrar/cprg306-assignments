@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { useUserAuth } from "../context/AuthContext";
 
-export default function Week9LandingPage() {
+export default function Week10LandingPage() {
   const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
 
   const handleLogin = async () => { try { await gitHubSignIn(); } catch (e) { console.error(e); } };
@@ -26,7 +26,7 @@ export default function Week9LandingPage() {
           </h1>
           <div className="flex items-center gap-3">
             <button className="rounded bg-gray-200 px-3 py-2" onClick={handleLogout}>Logout</button>
-            <Link className="rounded bg-blue-600 px-3 py-2 text-white" href="/week-9/shopping-list">
+            <Link className="rounded bg-blue-600 px-3 py-2 text-white" href="/week-10/shopping-list">
               Go to Shopping List
             </Link>
           </div>
