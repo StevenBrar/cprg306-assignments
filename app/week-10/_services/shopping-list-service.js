@@ -4,7 +4,7 @@ import { db } from "../../_utils/firebase";
 import { collection, getDocs, addDoc, query } from "firebase/firestore";
 
 /**
- * @param {string} userId
+ * @param {string} userId // fix?
  * @returns {Promise<Array<{id: string, name: string, quantity: number, category: string}>>}
  */
 export async function getItems(userId) {
