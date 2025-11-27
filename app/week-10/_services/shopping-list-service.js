@@ -5,7 +5,7 @@ import { collection, getDocs, addDoc, query } from "firebase/firestore";
 
 /**
  * @param {string} userId // fix?
- * @returns {Promise<Array<{id: string, name: string, quantity: number, category: string}>>}
+ * @returns {Promise<Array<{id: string, name: string, quantity: number, category: string}>>} // this as well
  */
 export async function getItems(userId) {
   if (!userId) return [];
